@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
 import java.math.BigInteger;
@@ -25,7 +27,7 @@ public class MillerRabin
 
             long m = n - 1;
             while (m % 2 == 0)
-                 m /= 2;
+                m /= 2;
             Random rand = new Random();
             for (int i = 0; i < iteration; i++)
             {
@@ -41,6 +43,44 @@ public class MillerRabin
                     return false;
             }
             return true;
+        }
+    }
+    public boolean isPrimeSecond(long n)
+    {
+        /** base case **/
+        if (n <= 1)
+            return false;
+        /** base case - 2 is prime **/
+        else if (n == 2)
+            return true;
+        /** an even number other than 2 is composite **/
+        else if (n % 2 == 0)
+            return false;
+        else {
+
+            long counter =0;
+            long m = n - 1;
+            while (m % 2 == 0) {
+                m /= 2;
+            }
+            long a = new Random().nextLong(n-1) + 2;
+            long mod = modPow(a,m,n);
+            if(mod == 1 || mod == n-1){
+                return true;
+            }
+            /**
+             * This method does not work well with big number. It goes for infinity. Gave it only 100K trials;
+             */
+            while(counter<100000) {
+                mod = mulMod(mod, mod, n);
+                if (mod == 1) {
+                    return false;
+                } else if (mod == -1 || mod == n-1) {
+                    return true;
+                }
+                counter++;
+            }
+            return false;
         }
     }
 
@@ -85,10 +125,16 @@ public class MillerRabin
          * Checking if number is prime
          */
         boolean prime = mr.isPrime(num, k);
+        boolean primeSecond = mr.isPrimeSecond(num);
         if (prime)
             System.out.println("\n"+ num +" is prime");
         else
             System.out.println("\n"+ num +" is composite");
+        if(primeSecond){
+            System.out.println("\n" +num+ " is prime");
+        } else {
+            System.out.println("\n"+num+" is composite");
+        }
 
     }
 }
