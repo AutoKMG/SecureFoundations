@@ -26,13 +26,11 @@ public class MillerRabin
             long m = n - 1;
             while (m % 2 == 0)
                  m /= 2;
-            System.out.println("m : " + m);
             Random rand = new Random();
             for (int i = 0; i < iteration; i++)
             {
                 long r = Math.abs(rand.nextLong());
                 long a = r % (n - 1) + 1, temp = m;
-                System.out.println("a : " + a);
                 long mod = modPow(a, temp, n);
                 while (temp != n - 1 && mod != 1 && mod != n - 1)
                 {
