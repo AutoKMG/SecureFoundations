@@ -8,12 +8,6 @@ public class ModItem {
     ModItem(long a, long m) {
         this.a = a;
         this.m = m;
-        long inverse = gcdExtended(this.a,this.m)[1];
-        if(inverse < 0){
-            this.mInverse = inverse + this.m;
-        }  else {
-            this.mInverse = inverse;
-        }
     }
     public long[] gcdExtended(long a, long b)
     {
